@@ -11,12 +11,12 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final homeViewModel = ref.read(homeViewModelProvider);
+    final homeViewModel = ref.read(homeViewModelProvider);
     final movies =
         ref.watch(homeViewModelProvider.select((value) => value.movies));
-    final fetchMovies = ref.read(homeViewModelProvider).fetchMovies;
+
     if (movies == null) {
-      fetchMovies();
+      homeViewModel.refresh();
     }
 
     return Hero(
@@ -30,7 +30,7 @@ class HomePage extends ConsumerWidget {
             child: movies == null
                 ? const CircularProgressIndicator()
                 : RefreshIndicator(
-                    onRefresh: fetchMovies,
+                    onRefresh: homeViewModel.refresh,
                     child: ListView.builder(
                       itemCount: movies.length,
                       itemBuilder: (context, index) {

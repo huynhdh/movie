@@ -15,6 +15,9 @@ class AppDio with DioMixin implements Dio {
       receiveTimeout: const Duration(seconds: 30),
     );
     this.options = options;
+
+    interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
+
     httpClientAdapter = IOHttpClientAdapter();
   }
   static Dio getInstance() {

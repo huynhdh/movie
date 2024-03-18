@@ -1,10 +1,11 @@
+import 'package:movie/data/handler/result.dart';
 import 'package:movie/data/model/movie.dart';
 import 'package:movie/data/model/show.dart';
 
 abstract class MovieRepostiory {
-  Future<List<Movie>> getMovies();
+  Future<Result<List<Movie>>> getMovies();
 
-  Future<Movie> getMovie(String id);
+  Future<Result<Movie>> getMovie(String id);
 
-  Future<Show> getShow(int id);
+  Future<Result<Show>> getShow(int id);
 }

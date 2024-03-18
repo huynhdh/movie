@@ -76,10 +76,4 @@ class _TvmazeDataSource implements TvmazeDataSource {
 
     return Uri.parse(dioBaseUrl).resolveUri(url).toString();
   }
-
-  @override
-  Future<List<Movie>> getMovies() {
-    // TODO: implement getMovies
-    throw UnimplementedError();
-  }
 }
