@@ -21,7 +21,6 @@ class HomeViewModel extends ChangeNotifier {
   bool isLoading = false;
 
   Future<Result<List<Movie>>> fetchMovies() {
-    _movieRepostiory.getShow(2);
     return _movieRepostiory.getMovies().whenComplete(notifyListeners);
   }
 

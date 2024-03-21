@@ -16,7 +16,7 @@ class AppDio with DioMixin implements Dio {
     );
     this.options = options;
 
-    interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
+    // interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
 
     httpClientAdapter = IOHttpClientAdapter();
   }

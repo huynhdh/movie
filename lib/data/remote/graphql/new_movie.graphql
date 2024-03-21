@@ -1,0 +1,10 @@
+mutation CreateMovie($movie: MovieInput!) {
+  createMovie(movie: $movie) {
+    code
+    message
+    success
+    movie {
+      title
+    }
+  }
+}

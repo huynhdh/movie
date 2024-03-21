@@ -19,12 +19,22 @@ class HomePage extends ConsumerWidget {
       homeViewModel.refresh();
     }
 
+    var router = AutoRouter.of(context);
+
     return Hero(
       tag: "movie",
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: const Text('Popular'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.create),
+              onPressed: () {
+                router.push(const NewMovieRoute());
+              },
+            ),
+          ],
         ),
         body: Center(
             child: movies == null
@@ -39,7 +49,7 @@ class HomePage extends ConsumerWidget {
                                 cachedNetworkImage(movies[index].poster ?? ''),
                             title: Text(movies[index].title ?? ''),
                             subtitle: Text(movies[index].director ?? ''),
-                            onTap: () => AutoRouter.of(context)
+                            onTap: () => router
                                 .push(MovieDetailRoute(movie: movies[index])));
                       },
                     ),

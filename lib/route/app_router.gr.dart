@@ -31,6 +31,12 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    NewMovieRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const NewMoviePage(),
+      );
+    },
   };
 }
 
@@ -84,4 +90,18 @@ class MovieDetailRouteArgs {
   String toString() {
     return 'MovieDetailRouteArgs{key: $key, movie: $movie}';
   }
+}
+
+/// generated route for
+/// [NewMoviePage]
+class NewMovieRoute extends PageRouteInfo<void> {
+  const NewMovieRoute({List<PageRouteInfo>? children})
+      : super(
+          NewMovieRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'NewMovieRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
