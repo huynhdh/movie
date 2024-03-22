@@ -1,10 +1,9 @@
+import 'dart:ffi';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:movie/data/remote/graphql/__generated__/new_movie.req.gql.dart';
-import 'package:movie/data/remote/graphql_client.dart';
-import 'package:movie/route/app_router.dart';
-import 'package:movie/ui/screen/home/home_page.dart';
+import 'package:movie/ui/screen/new_movie/new_movie_view_model.dart';
 
 @RoutePage()
 class NewMoviePage extends StatelessWidget {
@@ -45,7 +44,9 @@ class MovieFormState extends ConsumerState<MovieForm> {
 
   @override
   Widget build(BuildContext context) {
-    final graphqlClient = ref.read(graphqlClientProvider);
+    var router = AutoRouter.of(context);
+
+    final newMovieViewModel = ref.watch(newMovieViewModelProvider);
 
     return Form(
       key: _formKey,
@@ -93,23 +94,23 @@ class MovieFormState extends ConsumerState<MovieForm> {
             ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  final createMovieReq = GCreateMovieReq((b) => b
-                    ..vars.movie.title = _titleController.text
-                    ..vars.movie.year = int.parse(_yearController.text)
-                    ..vars.movie.director = _directorController.text
-                    ..vars.movie.genre = _genreController.text
-                    ..vars.movie.rating = double.parse(_ratingController.text)
-                    ..vars.movie.poster = _posterController.text
-                    ..vars.movie.banner = _bannerController.text
-                    ..vars.movie.description = _descriptionController.text);
-                  graphqlClient
-                      .request(createMovieReq)
-                      .listen((res) => print(res));
-                  AutoRouter.of(context).push(const HomeRoute());
+                  newMovieViewModel.addMovie(_bannerController.text,
+                      _posterController.text, _descriptionController.text,
+                      genre: _genreController.text,
+                      rating: double.parse(_ratingController.text),
+                      title: _titleController.text,
+                      year: int.parse(_yearController.text),
+                      director: _titleController.text);
+                  router.popForced("/");
                 }
               },
               child: const Text('Submit'),
             ),
+            const SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+                onPressed: router.popForced, child: const Text('Cancel'))
           ],
         ),
       ),

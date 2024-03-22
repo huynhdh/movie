@@ -2,6 +2,12 @@ query Movies {
   movies {
     id
     title
+    year
     director
+    genre
+    rating
+    banner
+    poster
+    description
   }
 }

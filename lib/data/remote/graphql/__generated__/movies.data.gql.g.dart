@@ -80,8 +80,25 @@ class _$GMoviesData_moviesSerializer
       'title',
       serializers.serialize(object.title,
           specifiedType: const FullType(String)),
+      'year',
+      serializers.serialize(object.year, specifiedType: const FullType(int)),
       'director',
       serializers.serialize(object.director,
+          specifiedType: const FullType(String)),
+      'genre',
+      serializers.serialize(object.genre,
+          specifiedType: const FullType(String)),
+      'rating',
+      serializers.serialize(object.rating,
+          specifiedType: const FullType(double)),
+      'banner',
+      serializers.serialize(object.banner,
+          specifiedType: const FullType(String)),
+      'poster',
+      serializers.serialize(object.poster,
+          specifiedType: const FullType(String)),
+      'description',
+      serializers.serialize(object.description,
           specifiedType: const FullType(String)),
     ];
 
@@ -112,8 +129,32 @@ class _$GMoviesData_moviesSerializer
           result.title = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
+        case 'year':
+          result.year = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
+          break;
         case 'director':
           result.director = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'genre':
+          result.genre = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'rating':
+          result.rating = serializers.deserialize(value,
+              specifiedType: const FullType(double))! as double;
+          break;
+        case 'banner':
+          result.banner = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'poster':
+          result.poster = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'description':
+          result.description = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
       }
@@ -245,7 +286,19 @@ class _$GMoviesData_movies extends GMoviesData_movies {
   @override
   final String title;
   @override
+  final int year;
+  @override
   final String director;
+  @override
+  final String genre;
+  @override
+  final double rating;
+  @override
+  final String banner;
+  @override
+  final String poster;
+  @override
+  final String description;
 
   factory _$GMoviesData_movies(
           [void Function(GMoviesData_moviesBuilder)? updates]) =>
@@ -255,15 +308,32 @@ class _$GMoviesData_movies extends GMoviesData_movies {
       {required this.G__typename,
       required this.id,
       required this.title,
-      required this.director})
+      required this.year,
+      required this.director,
+      required this.genre,
+      required this.rating,
+      required this.banner,
+      required this.poster,
+      required this.description})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         G__typename, r'GMoviesData_movies', 'G__typename');
     BuiltValueNullFieldError.checkNotNull(id, r'GMoviesData_movies', 'id');
     BuiltValueNullFieldError.checkNotNull(
         title, r'GMoviesData_movies', 'title');
+    BuiltValueNullFieldError.checkNotNull(year, r'GMoviesData_movies', 'year');
     BuiltValueNullFieldError.checkNotNull(
         director, r'GMoviesData_movies', 'director');
+    BuiltValueNullFieldError.checkNotNull(
+        genre, r'GMoviesData_movies', 'genre');
+    BuiltValueNullFieldError.checkNotNull(
+        rating, r'GMoviesData_movies', 'rating');
+    BuiltValueNullFieldError.checkNotNull(
+        banner, r'GMoviesData_movies', 'banner');
+    BuiltValueNullFieldError.checkNotNull(
+        poster, r'GMoviesData_movies', 'poster');
+    BuiltValueNullFieldError.checkNotNull(
+        description, r'GMoviesData_movies', 'description');
   }
 
   @override
@@ -282,7 +352,13 @@ class _$GMoviesData_movies extends GMoviesData_movies {
         G__typename == other.G__typename &&
         id == other.id &&
         title == other.title &&
-        director == other.director;
+        year == other.year &&
+        director == other.director &&
+        genre == other.genre &&
+        rating == other.rating &&
+        banner == other.banner &&
+        poster == other.poster &&
+        description == other.description;
   }
 
   @override
@@ -291,7 +367,13 @@ class _$GMoviesData_movies extends GMoviesData_movies {
     _$hash = $jc(_$hash, G__typename.hashCode);
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, title.hashCode);
+    _$hash = $jc(_$hash, year.hashCode);
     _$hash = $jc(_$hash, director.hashCode);
+    _$hash = $jc(_$hash, genre.hashCode);
+    _$hash = $jc(_$hash, rating.hashCode);
+    _$hash = $jc(_$hash, banner.hashCode);
+    _$hash = $jc(_$hash, poster.hashCode);
+    _$hash = $jc(_$hash, description.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -302,7 +384,13 @@ class _$GMoviesData_movies extends GMoviesData_movies {
           ..add('G__typename', G__typename)
           ..add('id', id)
           ..add('title', title)
-          ..add('director', director))
+          ..add('year', year)
+          ..add('director', director)
+          ..add('genre', genre)
+          ..add('rating', rating)
+          ..add('banner', banner)
+          ..add('poster', poster)
+          ..add('description', description))
         .toString();
   }
 }
@@ -323,9 +411,33 @@ class GMoviesData_moviesBuilder
   String? get title => _$this._title;
   set title(String? title) => _$this._title = title;
 
+  int? _year;
+  int? get year => _$this._year;
+  set year(int? year) => _$this._year = year;
+
   String? _director;
   String? get director => _$this._director;
   set director(String? director) => _$this._director = director;
+
+  String? _genre;
+  String? get genre => _$this._genre;
+  set genre(String? genre) => _$this._genre = genre;
+
+  double? _rating;
+  double? get rating => _$this._rating;
+  set rating(double? rating) => _$this._rating = rating;
+
+  String? _banner;
+  String? get banner => _$this._banner;
+  set banner(String? banner) => _$this._banner = banner;
+
+  String? _poster;
+  String? get poster => _$this._poster;
+  set poster(String? poster) => _$this._poster = poster;
+
+  String? _description;
+  String? get description => _$this._description;
+  set description(String? description) => _$this._description = description;
 
   GMoviesData_moviesBuilder() {
     GMoviesData_movies._initializeBuilder(this);
@@ -337,7 +449,13 @@ class GMoviesData_moviesBuilder
       _G__typename = $v.G__typename;
       _id = $v.id;
       _title = $v.title;
+      _year = $v.year;
       _director = $v.director;
+      _genre = $v.genre;
+      _rating = $v.rating;
+      _banner = $v.banner;
+      _poster = $v.poster;
+      _description = $v.description;
       _$v = null;
     }
     return this;
@@ -366,8 +484,19 @@ class GMoviesData_moviesBuilder
                 id, r'GMoviesData_movies', 'id'),
             title: BuiltValueNullFieldError.checkNotNull(
                 title, r'GMoviesData_movies', 'title'),
+            year: BuiltValueNullFieldError.checkNotNull(
+                year, r'GMoviesData_movies', 'year'),
             director: BuiltValueNullFieldError.checkNotNull(
-                director, r'GMoviesData_movies', 'director'));
+                director, r'GMoviesData_movies', 'director'),
+            genre: BuiltValueNullFieldError.checkNotNull(
+                genre, r'GMoviesData_movies', 'genre'),
+            rating: BuiltValueNullFieldError.checkNotNull(
+                rating, r'GMoviesData_movies', 'rating'),
+            banner: BuiltValueNullFieldError.checkNotNull(
+                banner, r'GMoviesData_movies', 'banner'),
+            poster: BuiltValueNullFieldError.checkNotNull(
+                poster, r'GMoviesData_movies', 'poster'),
+            description: BuiltValueNullFieldError.checkNotNull(description, r'GMoviesData_movies', 'description'));
     replace(_$result);
     return _$result;
   }

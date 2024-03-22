@@ -1,9 +1,11 @@
+import 'package:ferry/ferry.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/web.dart';
 import 'package:movie/data/handler/result.dart';
 import 'package:movie/data/model/movie.dart';
 import 'package:movie/data/model/show.dart';
 import 'package:movie/data/remote/graphql/__generated__/movies.req.gql.dart';
+import 'package:movie/data/remote/graphql/__generated__/new_movie.req.gql.dart';
 import 'package:movie/data/remote/graphql_client.dart';
 import 'package:movie/data/remote/my_data_source.dart';
 import 'package:movie/data/remote/tvmaze_data_source.dart';
@@ -28,18 +30,29 @@ class MovieRepostioryImpl extends MovieRepostiory {
 
   @override
   Future<Result<List<Movie>>> getMovies() {
-    // try to retrive data using graphsql
-    final moviesReq = GMoviesReq((b) => {});
-    graphqlClient.request(moviesReq).listen((res) {
-      if (res.data != null) {
-        var movies = res.data!.movies;
-        for (var movie in movies) {
-          _logger.d('Movie: ${movie.title} - ${movie.director}\n');
-        }
-      }
-    });
     return Result.guardFuture(() async {
-      final movies = await _dataSource.getMovies();
+      // set fetchPolicy to NetworkOnly for force request (not cache)
+      final moviesReq =
+          GMoviesReq((b) => b..fetchPolicy = FetchPolicy.NetworkOnly);
+
+      var response = await graphqlClient.request(moviesReq).first;
+      List<Movie> movies = [];
+      if (response.data != null) {
+        movies = response.data!.movies
+            .map((movie) => Movie(
+                  id: movie.id,
+                  title: movie.title,
+                  year: movie.year,
+                  director: movie.director,
+                  genre: movie.genre,
+                  rating: movie.rating,
+                  poster: movie.poster,
+                  banner: movie.banner,
+                  description: movie.description,
+                ))
+            .toList();
+      }
+      _logger.i(movies.length);
       return movies;
     }, _errorNotifier);
   }
@@ -56,6 +69,23 @@ class MovieRepostioryImpl extends MovieRepostiory {
   Future<Result<Show>> getShow(int id) {
     return Result.guardFuture(() async {
       return await _showDataSource.getShow(id: id);
+    }, _errorNotifier);
+  }
+
+  @override
+  Future<Result<int>> addMovie(Movie movie) {
+    return Result.guardFuture(() async {
+      final createMovieReq = GCreateMovieReq((b) => b
+        ..vars.movie.title = movie.title
+        ..vars.movie.year = movie.year
+        ..vars.movie.director = movie.director
+        ..vars.movie.genre = movie.genre
+        ..vars.movie.rating = movie.rating
+        ..vars.movie.poster = movie.poster
+        ..vars.movie.banner = movie.banner
+        ..vars.movie.description = movie.description);
+      var res = await graphqlClient.request(createMovieReq).first;
+      return res.data!.createMovie.code;
     }, _errorNotifier);
   }
 }

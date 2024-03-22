@@ -51,7 +51,13 @@ abstract class GMoviesData_movies
   String get G__typename;
   String get id;
   String get title;
+  int get year;
   String get director;
+  String get genre;
+  double get rating;
+  String get banner;
+  String get poster;
+  String get description;
   static Serializer<GMoviesData_movies> get serializer =>
       _$gMoviesDataMoviesSerializer;
 
